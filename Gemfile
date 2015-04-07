@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bourbon'
 gem 'faraday'
 gem 'haml'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
