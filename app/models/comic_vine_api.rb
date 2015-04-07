@@ -12,7 +12,7 @@ class ComicVineAPI
     JSON.parse(response.body)
   end
 
-  def volumes(api_key, comic_vine_id)
+  def volume(api_key, comic_vine_id)
     response = @conn.get("/api/volume/4050-#{comic_vine_id}/?api_key=#{api_key}&format=json")
     JSON.parse(response.body)
   end
