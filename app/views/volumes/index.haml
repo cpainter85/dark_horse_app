@@ -1,2 +1,10 @@
 .container
-  %h1 Volumes
+  .page-header
+    %h1 Volumes
+
+  .well
+    .row
+      -@volumes.each do |volume|
+        .col-md-4
+          %p.text-center=image_tag(volume.thumbnail_url)
+          %p.text-center=volume.name
