@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'bourbon'
-gem 'neat'
-gem 'bitters'
+gem 'bootstrap-sass', '~> 3.3.4'
 gem 'faraday'
 gem 'haml'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
