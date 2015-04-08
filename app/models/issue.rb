@@ -40,4 +40,18 @@ class Issue < ActiveRecord::Base
 
   end
 
+  def self.fill_issue_multiple(api_key, issue_array)
+    comic_vine = ComicVineAPI.new
+
+    issue_array.each do |issue|
+      i = comic_vine.issue(api_key, issue.comic_vine_issue_id)["results"]
+
+      i["description"] ? issue.description = i["description"] : nil
+      i["image"] ? issue.cover_image_url = i["image"]["small_url"] : nil
+      i["image"] ? issue.thumbnail_url = i["image"]["thumb_url"] : nil
+      i["cover_date"] ? issue.cover_date = i["cover_date"] : nil
+      issue.save
+    end
+  end
+
 end
