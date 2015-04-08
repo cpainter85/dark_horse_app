@@ -71,4 +71,14 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def self.get_issues_without_credits
+    issues = []
+    Issue.all.each do |x|
+      if x.issue_credits.empty?
+        issues << x
+      end
+    end
+    issues
+  end
+
 end
