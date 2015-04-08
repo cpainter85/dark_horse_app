@@ -10,7 +10,7 @@
         .well
           %h5="List of Issues (#{pluralize(@volume.issues.count, 'Issue')})"
           %ul
-            -@volume.issues.each do |issue|
+            -@volume.issues.sort { |a,b| a.issue_number.to_f <=> b.issue_number.to_f}.each do |issue|
               %li
                 ="Issue \##{issue.issue_number}"
                 -if !issue.story_name.empty?
