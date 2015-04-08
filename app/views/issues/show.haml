@@ -17,3 +17,6 @@
           %strong Cover Date:
           =@issue.cover_date.strftime('%B %Y')
       %p=link_to 'Return to Volume Overview', volume_path(@volume)
+
+      -if @issue.for_sale_comic
+        =link_to("Available for Purchase at Dark Horse Digital for #{@issue.dark_horse_digital_issue.price_in_dollars}", "#{@issue.dark_horse_digital_issue.issue_url}", class: 'btn btn-warning btn-lg btn-block')

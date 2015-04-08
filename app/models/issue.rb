@@ -3,6 +3,8 @@ class Issue < ActiveRecord::Base
   belongs_to :volume
   has_many :issue_credits
   has_many :creators, through: :issue_credits
+  has_one :for_sale_comic
+  has_one :dark_horse_digital_issue, through: :for_sale_comic
 
   def self.get_issues_for_volume(api_key, volume_array)
     comic_vine = ComicVineAPI.new
@@ -79,6 +81,10 @@ class Issue < ActiveRecord::Base
       end
     end
     issues
+  end
+
+  def full_title
+    "#{self.volume.name} \##{self.issue_number}"
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408201544) do
+ActiveRecord::Schema.define(version: 20150408205202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20150408201544) do
     t.datetime "updated_at"
   end
 
+  create_table "for_sale_comics", force: :cascade do |t|
+    t.integer  "issue_id"
+    t.integer  "dark_horse_digital_issue_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "issue_credits", force: :cascade do |t|
     t.integer  "creator_id"
     t.integer  "issue_id"
@@ -52,15 +59,6 @@ ActiveRecord::Schema.define(version: 20150408201544) do
     t.string   "story_name"
     t.integer  "volume_id"
     t.date     "cover_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "on_sale_comics", force: :cascade do |t|
-    t.integer  "issue_id"
-    t.integer  "vendor_issue_id"
-    t.string   "sale_url"
-    t.integer  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
