@@ -1,0 +1,17 @@
+.container
+  .page-header
+    %h1="#{@volume.name}"
+  .row
+    .col-md-6
+      =image_tag(@volume.image_url)
+    .container-fluid
+      .col-md-6
+        %p=strip_tags(@volume.description)
+        .well
+          %h5="List of Issues (#{pluralize(@volume.issues.count, 'Issue')})"
+          %ul
+            -@volume.issues.each do |issue|
+              %li
+                ="Issue \##{issue.issue_number}"
+                -if !issue.story_name.empty?
+                  ="-#{issue.story_name}"

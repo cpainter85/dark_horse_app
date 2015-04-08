@@ -14,28 +14,28 @@ class Volume < ActiveRecord::Base
     end
   end
 
-  # works for single volume
-  # def self.fill(api_key, volume)
-  #   comic_vine = ComicVineAPI.new
-  #   vol = comic_vine.volume(api_key, volume.comic_vine_volume_id)["results"]
-  #
-  #   volume.start_year = vol["start_year"].to_i
-  #   volume.description = vol["description"]
-  #   volume.image_url = vol["image"]["small_url"]
-  #   volume.thumbnail_url = vol["image"]["small_url"]
-  #   volume.save
-  # end
+  def self.fill_single(api_key, volume)
+    comic_vine = ComicVineAPI.new
+    vol = comic_vine.volume(api_key, volume.comic_vine_volume_id)["results"]
 
-  def self.fill(api_key, volume_array)
+    vol["start_year"] ? volume.start_year = vol["start_year"].to_i : nil
+binding.pry
+    vol["description"] ? volume.description = vol["description"] : nil
+    vol["image"] ? volume.image_url = vol["image"]["small_url"] : nil
+    vol["image"] ? volume.thumbnail_url = vol["image"]["thumb_url"] : nil
+    volume.save
+  end
+
+  def self.fill_multiple(api_key, volume_array)
     comic_vine = ComicVineAPI.new
 
     volume_array.each do |volume|
       vol = comic_vine.volume(api_key, volume.comic_vine_volume_id)["results"]
 
-      volume.start_year = vol["start_year"].to_i
-      volume.description = vol["description"]
-      volume.image_url = vol["image"]["small_url"]
-      volume.thumbnail_url = vol["image"]["thumb_url"]
+      vol["start_year"] ? volume.start_year = vol["start_year"].to_i : nil
+      vol["description"] ? volume.description = vol["description"] : nil
+      vol["image"] ? volume.image_url = vol["image"]["small_url"] : nil
+      vol["image"] ? volume.thumbnail_url = vol["image"]["thumb_url"] : nil
       volume.save
     end
   end
