@@ -56,4 +56,19 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def self.get_creators_credits_for_single_issue(api_key, issue)
+    comic_vine = ComicVineAPI.new
+    creators = comic_vine.issue(api_key, issue.comic_vine_issue_id)["results"]["person_credits"]
+    creators.each do |creator|
+      c = issue.creators.new
+      c.comic_vine_creator_id = creator["id"]
+      c.name = creator["name"]
+      c.save
+      r = issue.issue_credits.new
+      r.creator_id = Creator.find_by(comic_vine_creator_id: creator["id"]).id
+      r.role = creator["role"]
+      r.save
+    end
+  end
+
 end
