@@ -7,14 +7,20 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
 
   def self.retrieve_issue_info(dhd_id)
     doc = Nokogiri::HTML(open("https://digital.darkhorse.com/profile/#{dhd_id}/"))
-    issue = DarkHorseDigitalIssue.new
-    issue.dhd_id = dhd_id
-    title = doc.css('#profile-title').to_s
-    price = doc.css('a.ajax-submit.button.blue')
 
-    issue.title = Sanitize.fragment(title).strip
-    issue.price = ((Sanitize.fragment(price.to_s).delete '$').to_f*100).to_i
-    issue.save
+    meta = doc.xpath('//div[contains(@id, profile-meta)]//dd//a[@href]')
+
+    if meta.to_s.include? 'Dark Horse Comics'
+
+      issue = DarkHorseDigitalIssue.new
+      issue.dhd_id = dhd_id
+      title = doc.css('#profile-title').to_s
+      price = doc.css('a.ajax-submit.button.blue')
+
+      issue.title = Sanitize.fragment(title).strip
+      issue.price_in_cents = ((Sanitize.fragment(price.to_s).delete '$').to_f*100).to_i
+      issue.save
+    end
   end
 
   def issue_url(dhd_id)
@@ -39,9 +45,7 @@ end
 # puts title
 # price = doc.css('a.ajax-submit.button.blue')
 # puts price
-# # meta = doc.xpath('//div[contains(@id, profile-meta)]//dd')
 # meta = doc.xpath('//div[contains(@id, profile-meta)]//dd//a[@href]')
 # puts meta.to_s
 # dh_is_publisher = meta.to_s.include? 'Dark Horse Comics'
 # puts dh_is_publisher
-# # publisher = meta.include? ''
