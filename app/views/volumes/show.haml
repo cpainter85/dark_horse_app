@@ -3,8 +3,8 @@
     %h1="#{@volume.name}"
   .row
     .col-md-6
-      =image_tag(@volume.image_url)
-    .container-fluid
+      =image_tag(@volume.image_url ? @volume.image_url : 'no_image_available_cover.jpg', class: 'cover_image')
+    .container
       .col-md-6
         %p=strip_tags(@volume.description)
         .well

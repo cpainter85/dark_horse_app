@@ -28,5 +28,16 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def self.fill_issue_single(api_key, issue)
+    comic_vine = ComicVineAPI.new
+    i = comic_vine.issue(api_key, issue.comic_vine_issue_id)["results"]
+
+    i["description"] ? issue.description = i["description"] : nil
+    i["image"] ? issue.cover_image_url = i["image"]["small_url"] : nil
+    i["image"] ? issue.thumbnail_url = i["image"]["thumb_url"] : nil
+    i["cover_date"] ? issue.cover_date = i["cover_date"] : nil
+    issue.save
+
+  end
 
 end

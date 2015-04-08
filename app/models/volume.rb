@@ -19,7 +19,6 @@ class Volume < ActiveRecord::Base
     vol = comic_vine.volume(api_key, volume.comic_vine_volume_id)["results"]
 
     vol["start_year"] ? volume.start_year = vol["start_year"].to_i : nil
-binding.pry
     vol["description"] ? volume.description = vol["description"] : nil
     vol["image"] ? volume.image_url = vol["image"]["small_url"] : nil
     vol["image"] ? volume.thumbnail_url = vol["image"]["thumb_url"] : nil
