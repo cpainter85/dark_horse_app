@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+gem 'nokogiri', '~> 1.6.6.2'
 gem 'bootstrap-sass', '~> 3.3.4'
 gem 'faraday'
 gem 'haml'

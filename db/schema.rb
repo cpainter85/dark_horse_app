@@ -11,10 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407212504) do
+ActiveRecord::Schema.define(version: 20150408162157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "creators", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "comic_vine_creator_id"
+    t.text     "short_description"
+    t.text     "full_description"
+    t.string   "profile_picture_url"
+    t.string   "profile_picture_thumb_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issue_credits", force: :cascade do |t|
+    t.integer  "creator_id"
+    t.integer  "issue_id"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "issues", force: :cascade do |t|
     t.string   "issue_number"
@@ -25,6 +44,15 @@ ActiveRecord::Schema.define(version: 20150407212504) do
     t.string   "story_name"
     t.integer  "volume_id"
     t.date     "cover_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "on_sale_comics", force: :cascade do |t|
+    t.integer  "issue_id"
+    t.integer  "vendor_issue_id"
+    t.string   "sale_url"
+    t.integer  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
