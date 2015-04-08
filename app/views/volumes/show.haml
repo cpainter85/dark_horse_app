@@ -6,7 +6,9 @@
       =image_tag(@volume.image_url ? @volume.image_url : 'no_image_available_cover.jpg', class: 'cover_image')
     .container
       .col-md-6
-        %p=strip_tags(@volume.description)
+        -# %p=strip_tags(@volume.description)
+        %p=strip_links(@volume.description).html_safe
+
         .well
           %h5="List of Issues (#{pluralize(@volume.issues.count, 'Issue')})"
           %ul
