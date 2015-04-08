@@ -39,4 +39,12 @@ class Volume < ActiveRecord::Base
     end
   end
 
+  def self.retrieve_issues_if_empty(api_key)
+    Volume.all.each do |v|
+      if v.issues.empty?
+        Issue.get_issues_for_single_volume(api_key, v)
+      end
+    end
+  end
+
 end

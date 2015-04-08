@@ -11,7 +11,4 @@
           %h5="List of Issues (#{pluralize(@volume.issues.count, 'Issue')})"
           %ul
             -@volume.issues.sort { |a,b| a.issue_number.to_f <=> b.issue_number.to_f}.each do |issue|
-              %li
-                ="Issue \##{issue.issue_number}"
-                -if !issue.story_name.empty?
-                  ="-#{issue.story_name}"
+              %li=link_to("Issue \##{issue.issue_number} #{!issue.story_name.empty? ? '- ' + issue.story_name : ''}", volume_issue_path(@volume, issue))
