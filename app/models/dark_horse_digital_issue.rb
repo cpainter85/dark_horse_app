@@ -46,7 +46,7 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
     v = Volume.find_by(name: self.extract_volume_name_from_title)
     i = v.issues.find_by(issue_number: self.extract_issue_number_from_title)
     if i
-      fsc = self.for_sale_comics.new
+      fsc = self.build_for_sale_comic
       fsc.issue_id = i.id
       fsc.save
     end
