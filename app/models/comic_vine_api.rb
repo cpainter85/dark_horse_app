@@ -22,4 +22,9 @@ class ComicVineAPI
     JSON.parse(response.body)
   end
 
+  def creator(api_key, comic_vine_id)
+    response = @conn.get("/api/person/4040-#{comic_vine_id}/?api_key=#{api_key}&format=json")
+    JSON.parse(response.body)
+  end
+
 end
