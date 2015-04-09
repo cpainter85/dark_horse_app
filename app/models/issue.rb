@@ -1,4 +1,5 @@
 class Issue < ActiveRecord::Base
+
   validates :comic_vine_issue_id, uniqueness: true
   belongs_to :volume
   has_many :issue_credits

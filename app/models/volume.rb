@@ -1,6 +1,11 @@
 class Volume < ActiveRecord::Base
+  include PgSearch
+
+  multisearchable against: [:name, :description, :start_year, :thumbnail_url]
+
   validates :comic_vine_volume_id, uniqueness: true
   has_many :issues, dependent: :destroy
+
 # This will get me all the ids and names for volumes for the publisher I pass in
   def self.get_volumes_for_publisher(api_key, publisher_comic_vine_id)
     comic_vine = ComicVineAPI.new

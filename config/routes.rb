@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :issues, only: [:show]
   end
 
+  get '/search', to: 'volumes#search', as: 'search'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

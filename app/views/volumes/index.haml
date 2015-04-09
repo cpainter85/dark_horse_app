@@ -5,7 +5,7 @@
   .well
     .row
       -@volumes.each do |volume|
-        -# -if !volume.issues.empty?
         .col-md-4.index_element
+
           %p.text-center.thumb=link_to(image_tag(volume.thumbnail_url ? volume.thumbnail_url : 'no_image_available_thumb.jpg', class: 'img-thumbnail'), volume_path(volume))
           %p.text-center=link_to("#{volume.name} (#{volume.start_year})", volume_path(volume))

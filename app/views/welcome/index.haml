@@ -2,6 +2,12 @@
   .jumbotron
     %h1 Welcome!
     %h3 Here you will be able to find all comics published by Dark Horse Comics and where you can purchase them digitally
+
+    =form_tag search_path, method: :get do
+      =text_field_tag :query, params[:query], :class => 'search-box'
+      =submit_tag 'Search For Comic Series', name: nil, :class => 'btn btn-default'
+
+
     %p Browse by:
     %p.btn.btn-lg.btn-info
       =link_to 'Volumes', volumes_path

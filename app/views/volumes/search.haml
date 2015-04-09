@@ -1,0 +1,13 @@
+.container
+  .page-header
+    #h1 Search Results
+  .well
+    .row
+      -@results.each do |volume|
+        .col-md-4.index_element
+          
+          %p.text-center.thumb=link_to(image_tag(volume.searchable.thumbnail_url ? volume.searchable.thumbnail_url : 'no_image_available_thumb.jpg', class: 'img-thumbnail'), volume_path(volume.searchable.id))
+          %p.text-center=link_to("#{volume.searchable.name} (#{volume.searchable.start_year})", volume_path(volume.searchable.id))
+          -# %p.text-center=result.searchable.name
+-# -@results.map do |result|
+-#   =result.searchable.name
