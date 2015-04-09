@@ -1,13 +1,22 @@
 .container
-  .jumbotron
+  .jumbotron.text-center
     %h1 Welcome!
-    %h3 Here you will be able to find all comics published by Dark Horse Comics and where you can purchase them digitally
+    -# %h3
+    -#   ="Here you will be able to find #{@issues} issues of comic books published by Dark Horse Comics and if you can purchase them digitally at"
+    -#   =link_to 'Dark Horse Digital', 'http://digital.darkhorse.com'
+    %h3="We currently have #{number_with_delimiter(@issues, :delimiter => ',')} comic books from #{number_with_delimiter(@volumes, :delimiter => ',')} volumes by #{number_with_delimiter(@creators, :delimiter => ',')} creators"
+    %h4
+      ="Currently we have cataloged comics published by Dark Horse Comics and in addition to various information about them, you can see if they are available to purchase digitally at the"
+      =link_to 'Dark Horse Digital', 'http://digital.darkhorse.com'
+      ="store"
 
-    =form_tag search_path, method: :get do
-      =text_field_tag :query, params[:query], :class => 'search-box'
-      =submit_tag 'Search For Comic Series', name: nil, :class => 'btn btn-default'
+    =form_tag search_path, class: 'form-inline', method: :get do
+      .form-group
+        =label_tag :query, 'Search Comic Series', class:  'search-label'
 
+        .input-group
+          =text_field_tag :query, params[:query], :class => 'search-box'
+        =submit_tag 'Search', :class => 'btn btn-default search-button'
 
     %p Browse by:
-    %p.btn.btn-lg.btn-info
-      =link_to 'Volumes', volumes_path
+    %p=link_to 'Volumes', volumes_path, class: 'btn btn-lg btn-info btn-block'

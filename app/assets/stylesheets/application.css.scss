@@ -23,6 +23,22 @@ body {
  padding-bottom: 75px;
  padding-top: 75px;
  }
+
+ .jumbotron > * {
+   padding: 7px;
+ }
+
+ .search-label {
+   margin-right: 10px;
+ }
+
+ .search-box {
+   width: 500px;
+ }
+
+ .search-button {
+   margin-left: 10px;
+ }
 // .nav-home {
 //   background: #0E02F0;
 //   border: 5px groove #0E02F0;
