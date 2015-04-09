@@ -1,7 +1,7 @@
 class Creator < ActiveRecord::Base
-  include PgSearch
+  # include PgSearch
 
-  multisearchable against: [:name, :short_description, :full_description, :profile_picture_thumb_url]
+  # multisearchable against: [:name, :short_description, :full_description, :profile_picture_thumb_url]
 
   validates :comic_vine_creator_id, uniqueness: true
   has_many :issue_credits
