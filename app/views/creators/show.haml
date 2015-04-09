@@ -1,10 +1,11 @@
 .container
   .page-header
     %h1=@creator.name
-      
+
   .row
     .col-md-6
-      =image_tag(@creator.profile_picture_url ? @creator.profile_picture_url : 'no_image_available_cover.jpg', class: 'img-rounded center-block profile-pic')
+      =image_tag(@creator.profile_picture_url && @creator.profile_picture_url != 'http://static.comicvine.com/uploads/scale_small/0/1/1-male-good-large.jpg' ? @creator.profile_picture_url : 'no_image_available_cover.jpg', class: 'img-rounded center-block profile-pic')
+
       %p=strip_links(@creator.full_description).html_safe
 
     .container
@@ -14,6 +15,7 @@
           %h5="Credits (#{pluralize(@creator.issues.count, 'Issue')})"
           %ul
             -@creator.issue_credits.sort { |a,b| a.issue.full_title <=> b.issue.full_title }.each do |credit|
+
               %li
                 =link_to credit.issue.full_title, volume_issue_path(credit.issue.volume, credit.issue)
                 ="- #{credit.role}"

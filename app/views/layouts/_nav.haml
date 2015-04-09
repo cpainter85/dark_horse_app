@@ -5,6 +5,7 @@
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li.dropdown.nav-volume=link_to 'Volumes', volumes_path
+        %li.dropdown.nav=link_to 'Creators', creators_path
       =form_tag search_path, class: 'navbar-form navbar-left', method: :get do
         .form-group
           -# =label_tag :query, 'Search Comic Volumes'

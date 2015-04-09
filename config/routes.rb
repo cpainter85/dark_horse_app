@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :issues, only: [:show]
   end
 
-  resources :creators, only: [:show]
+  resources :creators, only: [:index, :show]
 
   get '/search', to: 'volumes#search', as: 'search'
 

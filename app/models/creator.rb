@@ -8,8 +8,8 @@ class Creator < ActiveRecord::Base
     comic_vine = ComicVineAPI.new
     person = comic_vine.creator(api_key, creator.comic_vine_creator_id)["results"]
 
-    creator.short_description = person["deck"]
-    creator.full_description = person["description"]
+    person["deck"] ? creator.short_description = person["deck"] : creator.short_description = ''
+    person["description"] ? creator.full_description = person["description"] : creator.full_description = ''
     person["image"] ? creator.profile_picture_url = person["image"]["small_url"] : nil
     person["image"] ? creator.profile_picture_thumb_url = person["image"]["thumb_url"] : nil
     creator.save
@@ -20,8 +20,8 @@ class Creator < ActiveRecord::Base
     creator_array.each do |creator|
       person = comic_vine.creator(api_key, creator.comic_vine_creator_id)["results"]
 
-      creator.short_description = person["deck"]
-      creator.full_description = person["description"]
+      person["deck"] ? creator.short_description = person["deck"] : creator.short_description = ''
+      person["description"] ? creator.full_description = person["description"] : creator.full_description = ''
       person["image"] ? creator.profile_picture_url = person["image"]["small_url"] : nil
       person["image"] ? creator.profile_picture_thumb_url = person["image"]["thumb_url"] : nil
       creator.save
