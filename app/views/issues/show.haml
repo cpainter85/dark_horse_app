@@ -1,6 +1,8 @@
 .container
   .page-header
-    %h1="#{@volume.name} \# #{@issue.issue_number} #{!@issue.story_name.empty? ? '- ' + @issue.story_name : ''}"
+    %h1
+      =link_to "#{@volume.name}", volume_path(@volume)
+      =" \# #{@issue.issue_number} #{!@issue.story_name.empty? ? '- ' + @issue.story_name : ''}"
   .row
     .col-md-6
       =image_tag(@issue.cover_image_url ? @issue.cover_image_url : 'no_image_available_cover.jpg', class: 'cover_image')

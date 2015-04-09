@@ -5,6 +5,8 @@ class Volume < ActiveRecord::Base
 
   validates :comic_vine_volume_id, uniqueness: true
   has_many :issues, dependent: :destroy
+  has_many :bundles
+  has_many :dark_horse_digital_issues, through: :bundles
 
 # This will get me all the ids and names for volumes for the publisher I pass in
   def self.get_volumes_for_publisher(api_key, publisher_comic_vine_id)

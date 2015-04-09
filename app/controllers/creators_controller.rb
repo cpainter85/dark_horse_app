@@ -1,7 +1,7 @@
 class CreatorsController < ApplicationController
 
   def index
-    @creators = Creator.all.order(:name).paginate(:page => params[:page], :per_page => 200  )
+    @creators = Creator.all.order(:name).paginate(:page => params[:page], :per_page => 100  )
   end
 
   def show

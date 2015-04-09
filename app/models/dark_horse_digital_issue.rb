@@ -5,6 +5,7 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
 
   validates :dhd_id, uniqueness: true
   has_one :for_sale_comic
+  has_one :bundle
 
   def self.retrieve_issue_info(dhd_id)
     require 'sanitize'
@@ -47,13 +48,53 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
     self.title.slice(((self.title.index('#'))+1)..self.title.length).strip
   end
 
-  def match_issue
-    v = Volume.find_by(name: self.extract_volume_name_from_title)
-    i = v.issues.find_by(issue_number: self.extract_issue_number_from_title)
-    if i
-      fsc = self.build_for_sale_comic
-      fsc.issue_id = i.id
-      fsc.save
+  def extract_issue_numbers_from_bundle
+    self.title.slice(self.title.index('#')...self.title.index('Bundle')).strip
+  end
+
+  def match
+
+    require 'sanitize'
+
+    if self.title.include? 'Bundle'
+      puts "Searching for Bundle: #{self.title}"
+      puts '-'*100
+      search = PgSearch.multisearch "#{self.extract_volume_name_from_title}"
+      search.first(5).each do |result|
+        puts "Id: #{result.searchable.id}"
+        puts "Title: #{result.searchable.name}"
+        puts "Description: #{Sanitize.fragment(result.searchable.description)}"
+        puts "\# of Issues: #{Volume.find(result.searchable.id).issues.count}"
+        puts '*'*100
+      end
+      print "Select the correct volume id:"
+      volume_id = gets.chomp
+      bundle = self.build_bundle
+      bundle.volume_id = volume_id
+      bundle.save
+      puts 'success!'
+    else
+      puts "Searching for: #{self.title} with price of #{self.price_in_dollars}"
+      puts '-'*100
+      search = PgSearch.multisearch "#{self.extract_volume_name_from_title}"
+      search.first(5).each do |result|
+        puts "Id: #{result.searchable.id}"
+        puts "Title: #{result.searchable.name}"
+        puts "Description: #{Sanitize.fragment(result.searchable.description)}"
+        puts "\# of Issues: #{Volume.find(result.searchable.id).issues.count}"
+        puts '*'*100
+      end
+      print "Select the correct volume id:"
+      volume_id = gets.chomp
+      issue = Volume.find(volume_id).issues.find_by(issue_number: self.extract_issue_number_from_title)
+      if issue
+        match = self.build_for_sale_comic
+        match.issue_id = issue.id
+        match.save
+        puts 'success!'
+      else
+        puts 'failed!'
+      end
     end
   end
 
