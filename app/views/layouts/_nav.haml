@@ -1,6 +1,7 @@
 %nav.navbar.navbar-default.navbar-fixed-top
   .container
+    .navbar-header
+      =link_to 'Home', root_path, class: 'navbar-brand'
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li.dropdown.nav-volume
-          =link_to 'Volumes', volumes_path
+        %li.dropdown.nav-volume=link_to 'Volumes', volumes_path

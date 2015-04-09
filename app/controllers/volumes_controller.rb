@@ -1,7 +1,7 @@
 class VolumesController < ApplicationController
   def index
     # until fully populated
-    @volumes = Volume.all
+    @volumes = Volume.all.order(:name)
   end
 
   def show
