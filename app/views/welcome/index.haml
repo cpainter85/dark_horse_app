@@ -12,7 +12,7 @@
 
     =form_tag search_path, class: 'form-inline', method: :get do
       .form-group
-        =label_tag :query, 'Search Comic Series', class:  'search-label'
+        =label_tag :query, 'Search Comic Series And Creators', class:  'search-label'
 
         .input-group
           =text_field_tag :query, params[:query], :class => 'search-box'
@@ -20,3 +20,4 @@
 
     %p Browse by:
     %p=link_to 'Volumes', volumes_path, class: 'btn btn-lg btn-info btn-block'
+    %p=link_to 'Creators', creators_path, class: 'btn btn-lg btn-primary btn-block'

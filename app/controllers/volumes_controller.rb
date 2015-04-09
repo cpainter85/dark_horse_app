@@ -10,7 +10,7 @@ class VolumesController < ApplicationController
 
   def search
     @results = PgSearch.multisearch(params[:query])
-
+# binding.pry
   end
 
 end

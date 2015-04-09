@@ -5,9 +5,13 @@
     .row
       -@results.each do |volume|
         .col-md-4.index_element
-          
-          %p.text-center.thumb=link_to(image_tag(volume.searchable.thumbnail_url ? volume.searchable.thumbnail_url : 'no_image_available_thumb.jpg', class: 'img-thumbnail'), volume_path(volume.searchable.id))
-          %p.text-center=link_to("#{volume.searchable.name} (#{volume.searchable.start_year})", volume_path(volume.searchable.id))
+          -if volume.searchable_type == 'Volume'
+            %p.text-center.thumb=link_to(image_tag(volume.searchable.thumbnail_url ? volume.searchable.thumbnail_url : 'no_image_available_thumb.jpg', class: 'img-thumbnail'), volume_path(volume.searchable.id))
+            %p.text-center=link_to("#{volume.searchable.name} (#{volume.searchable.start_year})", volume_path(volume.searchable.id))
+          -else
+            %p.text-center.thumb=link_to(image_tag(volume.searchable.profile_picture_thumb_url && volume.searchable.profile_picture_thumb_url != 'http://static.comicvine.com/uploads/scale_avatar/0/1/1-male-good-large.jpg' ? volume.searchable.profile_picture_thumb_url : 'no_image_available_thumb.jpg', class: 'img-thumbnail'), creator_path(volume.searchable.id))
+            %p.text-center=link_to("#{volume.searchable.name}", creator_path(volume.searchable.id))
+
           -# %p.text-center=result.searchable.name
 -# -@results.map do |result|
 -#   =result.searchable.name
