@@ -1,7 +1,7 @@
 class VolumesController < ApplicationController
   def index
     # until fully populated
-    @volumes = Volume.all.order(:name).paginate(:page => params[:page], :per_page => 100)
+    @volumes = Volume.all.order(:name).paginate(:page => params[:page], :per_page => 98)
   end
 
   def show
@@ -9,7 +9,7 @@ class VolumesController < ApplicationController
   end
 
   def search
-    @results = PgSearch.multisearch(params[:query])
+    @results = PgSearch.multisearch(params[:query]).paginate(:page => params[:page], :per_page => 98)
   end
 
 end
