@@ -9,7 +9,7 @@ class Creator < ActiveRecord::Base
 
   def self.fill_single_person(api_key, creator)
     comic_vine = ComicVineAPI.new
-binding.pry
+
     person = comic_vine.creator(api_key, creator.comic_vine_creator_id)["results"]
 
     creator.short_description = person["deck"]

@@ -27,7 +27,7 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
     end
   rescue OpenURI::HTTPError => e
     if e.message == '404 NOT FOUND'
-      puts e.message
+      puts "#{e.message} for DHD ID #{dhd_id}"
 
     end
   end
@@ -50,6 +50,10 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
 
   def extract_issue_numbers_from_bundle
     self.title.slice(self.title.index('#')...self.title.index('Bundle')).strip
+  end
+
+  def extract_first_number_from_bundle
+    self.title.slice((self.title.index('#')+1)...self.title.index('-')).strip.to_i
   end
 
   def match
@@ -96,6 +100,16 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
         puts 'failed!'
       end
     end
+  end
+
+  def self.unmatched
+    unmatched = []
+    DarkHorseDigitalIssue.all.each do |issue|
+      if !issue.for_sale_comic && !issue.bundle
+        unmatched << issue
+      end
+    end
+    unmatched
   end
 
 end
