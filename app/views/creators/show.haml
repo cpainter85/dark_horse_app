@@ -14,8 +14,9 @@
         .well
           %h5="Credits (#{pluralize(@creator.issues.count, 'Issue')})"
           %ul
-            -@creator.issue_credits.sort { |a,b| a.issue.full_title <=> b.issue.full_title }.each do |credit|
+
+            -@creator.issue_credits.map{|credit| [credit.issue.volume.name, credit.issue.issue_number.to_i, credit]}.sort_by{|title, number| [title, number]}.each do |credit|
 
               %li
-                =link_to credit.issue.full_title, volume_issue_path(credit.issue.volume, credit.issue)
-                ="- #{credit.role}"
+                =link_to credit.last.issue.full_title_with_year, volume_issue_path(credit.last.issue.volume, credit.last.issue)
+                ="- #{credit.last.role}"

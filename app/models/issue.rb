@@ -88,4 +88,8 @@ class Issue < ActiveRecord::Base
     "#{self.volume.name} \##{self.issue_number}"
   end
 
+  def full_title_with_year
+    "#{self.volume.name} (#{self.volume.start_year}) \##{self.issue_number}"
+  end
+
 end
