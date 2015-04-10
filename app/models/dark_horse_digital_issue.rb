@@ -37,7 +37,11 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
   end
 
   def price_in_dollars
-    "$#{self.price_in_cents.to_f/100}"
+    if self.price_in_cents == 0
+      'FREE'
+    else
+      "$#{self.price_in_cents.to_f/100}"
+    end
   end
 
   def extract_volume_name_from_title
@@ -81,7 +85,7 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
       puts "Searching for: #{self.title} with price of #{self.price_in_dollars}"
       puts '-'*100
       search = PgSearch.multisearch "#{self.extract_volume_name_from_title}"
-      search.first(5).each do |result|
+      search.first(10).each do |result|
         puts "Id: #{result.searchable.id}"
         puts "Title: #{result.searchable.name}"
         puts "Description: #{Sanitize.fragment(result.searchable.description)}"
