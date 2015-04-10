@@ -4,8 +4,8 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
   # require 'sanitize'
 
   validates :dhd_id, uniqueness: true
-  has_one :for_sale_comic
-  has_one :bundle
+  has_many :for_sale_comics
+  has_many :bundles
 
   def self.retrieve_issue_info(dhd_id)
     require 'sanitize'
@@ -73,10 +73,10 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
       end
       print "Select the correct volume id:"
       volume_id = gets.chomp
-      bundle = self.build_bundle
+      bundle = self.bundles.new
       bundle.volume_id = volume_id
       bundle.save
-      puts 'success!'
+      puts 'SUCCESS'+'!'*50
     else
       puts "Searching for: #{self.title} with price of #{self.price_in_dollars}"
       puts '-'*100
@@ -92,12 +92,12 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
       volume_id = gets.chomp
       issue = Volume.find(volume_id).issues.find_by(issue_number: self.extract_issue_number_from_title)
       if issue
-        match = self.build_for_sale_comic
+        match = self.for_sale_comics
         match.issue_id = issue.id
         match.save
-        puts 'success!'
+        puts 'SUCCESS'+'!'*50
       else
-        puts 'failed!'
+        puts 'FAILED'+'!'*50
       end
     end
   end
@@ -105,7 +105,7 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
   def self.unmatched
     unmatched = []
     DarkHorseDigitalIssue.all.each do |issue|
-      if !issue.for_sale_comic && !issue.bundle
+      if !issue.for_sale_comics && !issue.bundles
         unmatched << issue
       end
     end
