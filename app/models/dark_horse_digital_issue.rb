@@ -75,7 +75,8 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
     require 'sanitize'
 
     if self.title.include? 'Bundle'
-      puts "Searching for Bundle: #{self.title}"
+      puts '-'*100
+      puts "Searching for Bundle: #{self.title} (DHD_id: #{self.dhd_id})"
       puts '-'*100
       search = PgSearch.multisearch "#{self.extract_volume_name_from_title}"
       search.first(10).reverse.each do |result|
@@ -85,6 +86,9 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
         puts "\# of Issues: #{Volume.find(result.searchable.id).issues.count}"
         puts '*'*100
       end
+      puts '-'*100
+      puts "Searching for Bundle: #{self.title} (DHD_id: #{self.dhd_id})"
+      puts '-'*100
       print "Select the correct volume id:"
       volume_id = gets.chomp
       bundle = self.build_bundle
@@ -92,7 +96,8 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
       bundle.save
       puts '!'*50 + 'SUCCESS' + '!'*50
     else
-      puts "Searching for: #{self.title} with price of #{self.price_in_dollars}"
+      puts '-'*100
+      puts "Searching for: #{self.title} with price of #{self.price_in_dollars} (DHD_id:#{self.dhd_id})"
       puts '-'*100
       search = PgSearch.multisearch "#{self.extract_volume_name_from_title}"
       search.first(10).reverse.each do |result|
@@ -103,7 +108,7 @@ class DarkHorseDigitalIssue < ActiveRecord::Base
         puts '*'*100
       end
       puts '-'*100
-      puts "Searching for: #{self.title} with price of #{self.price_in_dollars}"
+      puts "Searching for: #{self.title} with price of #{self.price_in_dollars} (DHD_id:#{self.dhd_id})"
       puts '-'*100
       print "Select the correct volume id:"
       volume_id = gets.chomp
